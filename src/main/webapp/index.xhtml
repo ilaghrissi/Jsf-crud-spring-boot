@@ -4,23 +4,37 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:p="http://primefaces.org/ui"
-	xmlns:ui="http://java.sun.com/jsf/facelets">
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core">
 
 <h:head></h:head>
 <h:body>
 	<b>Hello world</b>
+	<h:form id="form">
+		<p:dataTable var="book" value="#{bookBean.books}">
+			<p:column headerText="Title">
+				<h:outputText value="#{book.title}" />
+			</p:column>
+			<p:column headerText="Author">
+				<h:outputText value="#{book.author}" />
+			</p:column>
+			<p:column headerText="Price">
+				<h:outputText value="#{book.price}" />
+			</p:column>
+			<p:column>
+				<p:commandButton id="selectProduct" oncomplete="PF('dlg').show()" update=":form:detail"
+					 value="Delete">
+					<f:setPropertyActionListener target="#{bookBean.selected}"
+						value="#{book}" />
+				</p:commandButton>
+			</p:column>
+		</p:dataTable>
+				<p:dialog widgetVar="dlg">
+		<h:outputText id="detail" value="#{bookBean.selected}" />
+		 </p:dialog>
+		 
+	</h:form>
 
-	<p:dataTable var="book" value="#{bookBean.books}">
-		<p:column headerText="Title">
-			<h:outputText value="#{book.title}" />
-		</p:column>
-		<p:column headerText="Author">
-			<h:outputText value="#{book.author}" />
-		</p:column>
-		<p:column headerText="Price">
-			<h:outputText value="#{book.price}" />
-		</p:column>
-	</p:dataTable>
 </h:body>
 
 

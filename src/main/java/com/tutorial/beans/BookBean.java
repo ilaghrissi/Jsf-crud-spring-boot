@@ -27,6 +27,7 @@ import lombok.Setter;
 public class BookBean {
 
 	private List<Book> books = new ArrayList<Book>();
+	private Book selected;
 
 	@PostConstruct
 	public void init() {
@@ -40,5 +41,4 @@ public class BookBean {
 		b2.setPrice(30);
 		this.books = Arrays.asList(b1, b2);
 	}
-
 }
