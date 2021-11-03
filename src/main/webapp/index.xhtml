@@ -11,6 +11,7 @@
 <h:body>
 	<b>Hello world</b>
 	<h:form id="form">
+	<p:growl id="messageInf" showDetail="true"/>
 		<p:dataTable var="book" value="#{bookBean.books}">
 			<p:column headerText="Title">
 				<h:outputText value="#{book.title}" />
@@ -22,17 +23,47 @@
 				<h:outputText value="#{book.price}" />
 			</p:column>
 			<p:column>
-				<p:commandButton id="selectProduct" oncomplete="PF('dlg').show()" update=":form:detail"
-					 value="Delete">
+				<p:commandButton id="updateBookBtn" oncomplete="PF('dlg1').show()"
+					update=":form:detail1" value="Update">
+					<f:setPropertyActionListener target="#{bookBean.selected}"
+						value="#{book}" />
+				</p:commandButton>
+			</p:column>
+			<p:column>
+				<p:commandButton id="deleteBookBtn" oncomplete="PF('dlg2').show()"
+					update=":form:detail2" value="Delete">
 					<f:setPropertyActionListener target="#{bookBean.selected}"
 						value="#{book}" />
 				</p:commandButton>
 			</p:column>
 		</p:dataTable>
-				<p:dialog widgetVar="dlg">
-		<h:outputText id="detail" value="#{bookBean.selected}" />
-		 </p:dialog>
-		 
+
+		<!-- dialog to show dlg 1 -->
+		<p:confirmDialog widgetVar="dlg1" showEffect="fade" hideEffect="fade"
+			responsive="true" width="350" severity="alert">
+			<f:facet name="message">
+				<h:outputFormat id="detail1" value="#{msg.umessage}">
+					<f:param value="#{bookBean.selected.title}" />
+				</h:outputFormat>
+			</f:facet>
+			<p:commandButton value="No" oncomplete="PF('dlg1').hide()"/>
+			<p:commandButton value="Yes" action="#{bookBean.update}" update="messageInf"
+				oncomplete="PF('dlg1').hide()"/>
+		</p:confirmDialog>
+
+		<!-- dialog to show dlg 2 -->
+		<p:confirmDialog widgetVar="dlg2" showEffect="fade" hideEffect="fade"
+			responsive="true" width="350" severity="alert">
+			<f:facet name="message">
+				<h:outputFormat id="detail2" value="#{msg.dmessage}">
+					<f:param value="#{bookBean.selected.title}" />
+				</h:outputFormat>
+			</f:facet>
+			<p:commandButton value="No" oncomplete="PF('dlg2').hide()"
+				styleClass="ui-confirmdialog-no ui-button-flat" />
+			<p:commandButton value="Yes" action="#{bookBean.delete}"
+				oncomplete="PF('dlg2').hide()" styleClass="ui-confirmdialog-yes" />
+		</p:confirmDialog>
 	</h:form>
 
 </h:body>

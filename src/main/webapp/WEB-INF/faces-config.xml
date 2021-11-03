@@ -4,12 +4,22 @@
 	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd"
 	version="2.2">
 
-	<!-- JSF ELResolver (i.e. an Expression Language resolver) that 
-		delegates to the Spring root WebApplicationContext, resolving name references 
-		to Spring-defined beans -->
+	<!-- JSF ELResolver (i.e. an Expression Language resolver) that delegates 
+		to the Spring root WebApplicationContext, resolving name references to Spring-defined 
+		beans -->
 	<application>
 		<el-resolver>org.springframework.web.jsf.el.SpringBeanFacesELResolver
 		</el-resolver>
+
+		<locale-config>
+			<default-locale>en</default-locale>
+			<supported-locale>fr</supported-locale>
+		</locale-config>
+
+		<resource-bundle>
+			<base-name>com.messages.messages</base-name>
+			<var>msg</var>
+		</resource-bundle>
 	</application>
 
 </faces-config>
