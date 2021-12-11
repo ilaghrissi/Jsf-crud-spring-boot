@@ -1,19 +1,20 @@
 package com.tutorial.beans;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
-import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.tutorial.vo.Book;
+import com.tutorial.repositories.BookRepository;
+import com.tutorial.services.BookService;
+import com.tutorial.vo.BookVo;
 
 import lombok.Data;
 import lombok.Getter;
@@ -29,29 +30,30 @@ import lombok.Setter;
 @RequestScoped
 public class BookBean {
 
-	private List<Book> books = new ArrayList<Book>();
-	private Book selected;
+	private List<BookVo> books;
+	private BookVo selected;
+	
+	@Autowired
+	private BookRepository bookRepository;
+	
+	@Autowired
+	private BookService bookService;
 
 	@PostConstruct
 	public void init() {
-		Book b1 = new Book();
-		b1.setTitle("java ocp");
-		b1.setAuthor("author test");
-		b1.setPrice(20);
-		Book b2 = new Book();
-		b2.setTitle("java ocp 2");
-		b2.setAuthor("author test 2");
-		b2.setPrice(30);
-		this.books = Arrays.asList(b1, b2);
+		this.books = bookService.getAllBooks();
 	}
 	
 	public void update() {
 		System.out.println("update element"+this.selected);
+		bookRepository.getBooksBytitle("test ele");
 		addMessage("Confirmed", "You have accepted");
 	}
 	
 	public void delete() {
 		System.out.println("delete element"+this.selected);
+		bookService.deleteBook(this.selected.getId());
+		this.books = bookService.getAllBooks();
 	}
 	
     public void addMessage(String summary, String detail) {

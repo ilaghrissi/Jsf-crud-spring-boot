@@ -11,8 +11,9 @@ import lombok.ToString;
 @Setter
 @ToString
 @NoArgsConstructor
-public class Book {
+public class BookVo {
 	
+	private Long id;
 	private String title;
 	private double price;
 	private String author;

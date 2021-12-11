@@ -7,12 +7,18 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:f="http://java.sun.com/jsf/core">
 
-<h:head></h:head>
+<h:head>
+	<title>PrimeFaces Example for spring security</title>
+	<h:outputStylesheet name="/css/main.css" />
+</h:head>
 <h:body>
+	<h:form>
+		<h:commandLink id="logout" action="#{loginBean.logout}" value="Logout"></h:commandLink>
+	</h:form>
 	<b>Hello world</b>
 	<h:form id="form">
 	<p:growl id="messageInf" showDetail="true"/>
-		<p:dataTable var="book" value="#{bookBean.books}">
+		<p:dataTable var="book" value="#{bookBean.books}" id="bookDataTable">
 			<p:column headerText="Title">
 				<h:outputText value="#{book.title}" />
 			</p:column>
@@ -61,7 +67,7 @@
 			</f:facet>
 			<p:commandButton value="No" oncomplete="PF('dlg2').hide()"
 				styleClass="ui-confirmdialog-no ui-button-flat" />
-			<p:commandButton value="Yes" action="#{bookBean.delete}"
+			<p:commandButton value="Yes" action="#{bookBean.delete}" update=":form:bookDataTable"
 				oncomplete="PF('dlg2').hide()" styleClass="ui-confirmdialog-yes" />
 		</p:confirmDialog>
 	</h:form>
