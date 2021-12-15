@@ -10,6 +10,7 @@ import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import com.tutorial.repositories.BookRepository;
@@ -38,6 +39,9 @@ public class BookBean {
 	
 	@Autowired
 	private BookService bookService;
+
+	@Value("${app.version}")
+	private String version;
 
 	@PostConstruct
 	public void init() {
