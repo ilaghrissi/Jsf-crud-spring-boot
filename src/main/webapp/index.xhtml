@@ -11,7 +11,7 @@
 	<title>PrimeFaces Example for spring security</title>
 	<h:outputStylesheet name="/css/main.css" />
 </h:head>
-<b>	<h:outputText value="#{bookBean.version}" /></b>
+<b>	<h:outputText value="#{bookBean.buildProperties.getVersion()}" /></b>
 <h:body>
 	<h:form>
 		<h:commandLink id="logout" action="#{loginBean.logout}" value="Logout"></h:commandLink>

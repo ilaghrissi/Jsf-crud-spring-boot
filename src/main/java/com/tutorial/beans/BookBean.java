@@ -10,7 +10,7 @@ import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.info.BuildProperties;
 import org.springframework.stereotype.Component;
 
 import com.tutorial.repositories.BookRepository;
@@ -40,8 +40,22 @@ public class BookBean {
 	@Autowired
 	private BookService bookService;
 
-	@Value("${app.version}")
-	private String version;
+	@Autowired
+	BuildProperties buildProperties;
+
+	/*
+	@Autowired
+   private Environment environment;
+    environment.getActiveProfiles();
+	 */
+
+	/*
+		buildProperties.getName();  // Artifact's name from the pom.xml file
+		buildProperties.getVersion();  	// Artifact version
+		buildProperties.getTime(); // Date and Time of the build
+		buildProperties.getArtifact(); 	// Artifact ID from the pom file
+		buildProperties.getGroup(); 	// Group ID from the pom file
+	 */
 
 	@PostConstruct
 	public void init() {
