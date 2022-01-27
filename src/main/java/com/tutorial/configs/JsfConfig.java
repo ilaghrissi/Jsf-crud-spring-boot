@@ -22,7 +22,7 @@ public class JsfConfig extends SpringBootServletInitializer implements ServletCo
 	public ServletRegistrationBean<FacesServlet> facesServlet() {
 		ServletRegistrationBean<FacesServlet> registration = new ServletRegistrationBean<FacesServlet>();
 		registration.setServlet(new FacesServlet());
-		registration.setUrlMappings(Arrays.asList("*.xhtml"));
+		registration.setUrlMappings(Arrays.asList("*.xhtml","*.jsf"));
 		registration.setLoadOnStartup(1);
 		return registration;
 	}
