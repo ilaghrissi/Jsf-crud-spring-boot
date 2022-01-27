@@ -1,5 +1,6 @@
 package com.tutorial.beans;
 
+import com.tutorial.mappers.BookMapper;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,6 +10,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.info.BuildProperties;
 import org.springframework.stereotype.Component;
@@ -22,6 +24,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+@Slf4j
 @Data
 @Getter
 @Setter
@@ -33,12 +36,17 @@ public class BookBean {
 
 	private List<BookVo> books;
 	private BookVo selected;
+
+	private BookVo newBook = new BookVo();
 	
 	@Autowired
 	private BookRepository bookRepository;
 	
 	@Autowired
 	private BookService bookService;
+
+	@Autowired
+	private BookMapper bookMapper;
 
 	@Autowired
 	BuildProperties buildProperties;
@@ -61,21 +69,30 @@ public class BookBean {
 	public void init() {
 		this.books = bookService.getAllBooks();
 	}
-	
+
+
+	public void add() {
+		log.info("update element {}", this.selected);
+		bookRepository.save(bookMapper.mapBookVoToBook(newBook));
+		this.books = bookMapper.mapBookListToBookVoList(bookRepository.findAll());
+		this.newBook = new BookVo();
+		addMessage("Confirmed", "Your book is added");
+	}
+
 	public void update() {
-		System.out.println("update element"+this.selected);
+		log.info("update element {}", this.selected);
 		bookRepository.getBooksBytitle("test ele");
 		addMessage("Confirmed", "You have accepted");
 	}
 	
 	public void delete() {
-		System.out.println("delete element"+this.selected);
+		log.info("delete element {}", this.selected);
 		bookService.deleteBook(this.selected.getId());
 		this.books = bookService.getAllBooks();
 	}
 	
-    public void addMessage(String summary, String detail) {
+	public void addMessage(String summary, String detail) {
         FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, summary, detail);
         FacesContext.getCurrentInstance().addMessage(null, message);
-    }
+	}
 }

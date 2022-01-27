@@ -16,8 +16,32 @@
 	<h:form>
 		<h:commandLink id="logout" action="#{loginBean.logout}" value="Logout"></h:commandLink>
 	</h:form>
-	<b>Hello world</b>
-	<h:form id="form">
+	<h1>Manage books</h1>
+	<h2>Add new Book</h2>
+	<h:form id="add">
+		<h:panelGrid columns="3" cellpadding="5" style="margin: 0 auto;">
+			<p:outputLabel for="title" value="Title" />
+			<p:inputText id="title" value="#{bookBean.newBook.title}" />
+			<p:message for="title" />
+
+			<p:outputLabel for="author" value="Author" />
+			<p:inputText id="author" value="#{bookBean.newBook.author}">
+			</p:inputText>
+			<p:message for="author" />
+
+			<p:outputLabel for="price" value="Price" />
+			<p:inputText id="price" value="#{bookBean.newBook.price}">
+			</p:inputText>
+			<p:message for="price" />
+
+			<p:commandButton update="@form :books:bookDataTable" value="Add" action="#{bookBean.add}">
+			</p:commandButton>
+		</h:panelGrid>
+	</h:form>
+
+
+	<h2>Book list</h2>
+	<h:form id="books">
 	<p:growl id="messageInf" showDetail="true"/>
 		<p:dataTable var="book" value="#{bookBean.books}" id="bookDataTable">
 			<p:column headerText="Title">
@@ -29,16 +53,16 @@
 			<p:column headerText="Price">
 				<h:outputText value="#{book.price}" />
 			</p:column>
-			<p:column>
+		<!--	<p:column>
 				<p:commandButton id="updateBookBtn" oncomplete="PF('dlg1').show()"
-					update=":form:detail1" value="Update">
+					update=":books:detail1" value="Update">
 					<f:setPropertyActionListener target="#{bookBean.selected}"
 						value="#{book}" />
 				</p:commandButton>
-			</p:column>
+			</p:column> -->
 			<p:column>
 				<p:commandButton id="deleteBookBtn" oncomplete="PF('dlg2').show()"
-					update=":form:detail2" value="Delete">
+					update=":books:detail2" value="Delete">
 					<f:setPropertyActionListener target="#{bookBean.selected}"
 						value="#{book}" />
 				</p:commandButton>
@@ -68,7 +92,7 @@
 			</f:facet>
 			<p:commandButton value="No" oncomplete="PF('dlg2').hide()"
 				styleClass="ui-confirmdialog-no ui-button-flat" />
-			<p:commandButton value="Yes" action="#{bookBean.delete}" update=":form:bookDataTable"
+			<p:commandButton value="Yes" action="#{bookBean.delete}" update=":books:bookDataTable"
 				oncomplete="PF('dlg2').hide()" styleClass="ui-confirmdialog-yes" />
 		</p:confirmDialog>
 	</h:form>
