@@ -120,10 +120,14 @@
 					<dockerDirectory>${project.build.directory}</dockerDirectory>
 					<resources>
 						<resource>
+							<targetPath>/</targetPath>
 							<directory>${project.build.directory}</directory>
 							<include>${project.build.finalName}.war</include>
 						</resource>
 					</resources>
+					<buildArgs>
+						<VERSION>${project.version}</VERSION>
+					</buildArgs>
 				</configuration>
 				<dependencies>
 					<dependency>
