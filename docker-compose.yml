@@ -1,6 +1,6 @@
 version: "3"
 services:
   jsf-app:
-    image: tutorial/jsf-app:latest
+    image: jsf-app:latest
     ports:
       - "8081:8081"
